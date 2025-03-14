@@ -1,15 +1,16 @@
 import express from 'express';
 import lessonRoutes from './lesson/lessonRoutes';
+import alfaLessonController from './alfaLesson/alfaLessonController';
 
 const app = express();
 
-// Parse JSON bodies.
 app.use(express.json());
 
-// Mount lesson routes at /lessons.
-app.use('/lessons', lessonRoutes);
+// AlfaLesson routes
+app.post('/', (req, res) => {
+  res.send(alfaLessonController.create(req, res));
+})
 
-// Simple health check.
 app.get('/health', (req, res) => {
   res.send('OK');
 });
