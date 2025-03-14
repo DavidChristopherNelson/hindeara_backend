@@ -1,11 +1,12 @@
 import type { AlfaLesson } from './AlfaLesson';
 
-export class alfaLessonDbInterface {
+export default class alfaLessonDbInterface {
   private static alfaLessons: AlfaLesson[] = [];
   private static nextId: number = 1;
 
   static create = (
-    alfaLessonData: Omit<AlfaLesson, 'id' | 'createAt' | 'updatedAt' | 'completedAt'>
+    alfaLessonData: 
+    Omit<AlfaLesson, 'id' | 'createdAt' | 'updatedAt' | 'completedAt'>
   ): AlfaLesson => {
     const newAlfaLesson: AlfaLesson = {
       id: alfaLessonDbInterface.nextId++,
