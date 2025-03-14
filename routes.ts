@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 
 // AlfaLesson routes
-app.post('/alfa_lesson', (req, res) => {
+app.post('/student/:studentId/alfa_lesson', (req, res) => {
   res.send(alfaLessonController.create(req, res));
 });
 app.get('/alfa_lesson', (req, res) => {
