@@ -8,9 +8,7 @@ const updateDataSchema = Joi.object({
   status: Joi.string().optional()
 });
 
-const idSchema = Joi.object({
-  alfaLessonId: Joi.number().integer().required()
-});
+const idSchema = Joi.number().integer().required();
 
 export default class alfaLessonController {
   static create = (
@@ -37,6 +35,8 @@ export default class alfaLessonController {
     req: Request,
     res: Response
   ) => {
+    console.log("alfaLessonController.ts/readAll")
+
     try {
       const alfaLessons = alfaLessonBusinessLogic.readAll();
       res.status(200).json(alfaLessons);
