@@ -63,9 +63,9 @@ export default class alfaLessonController {
       if (!lesson) {
         return res.status(404).json({ error: 'Lesson not found' });
       }
-      res.json(lesson);
+      res.status(200).json(lesson);
     } catch (error) {
-      res.status(500).json({error: 'Failed to read all alfa lessons.'});
+      res.status(500).json({error: 'Failed to read the alfa lesson.'});
     }
   };
 
@@ -76,7 +76,7 @@ export default class alfaLessonController {
     try {
       // Validate ID
       const { error: idError, value: idValue } = validateInput<number>(
-        idSchema, 
+        idSchema,
         req.params.alfaLessonId
       );
       if (idError) {
@@ -100,7 +100,7 @@ export default class alfaLessonController {
       if (!lesson) {
         return res.status(404).json({ error: 'Lesson not found' });
       }
-      res.json(lesson);
+      res.status(200).json(lesson);
     } catch (error) {
       res.status(500).json({ error: 'Failed to update lesson' });
     }
@@ -122,7 +122,8 @@ export default class alfaLessonController {
       
       const success = alfaLessonBusinessLogic.delete(alfaLessonId);
       if (!success) {
-        return res.status(404).json({ error: 'Alfa lesson not found' });
+        return res.status(404).json({ error: 'Alfa lesson not deleted, maybe \
+          you put in an incorrect id?' });
       }
       res.status(204).send();
     } catch (error) {

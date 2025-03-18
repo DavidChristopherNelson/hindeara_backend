@@ -4,7 +4,6 @@ import alfaLessonController from '../src/alfaLesson/alfaLessonController';
 
 jest.mock('../src/alfaLesson/alfaLessonController');
 
-// Clear mocks before each test to ensure isolation
 beforeEach(() => {
   jest.clearAllMocks();
 });
@@ -19,7 +18,7 @@ describe('Test AlfaLesson routes', () => {
       );
 
       const studentId = 1623;
-      const res = await request(app)
+      await request(app)
         .post(`/students/${studentId}/alfa_lessons`)
         .send();
       expect(alfaLessonController.create).toHaveBeenCalled();
@@ -34,7 +33,7 @@ describe('Test AlfaLesson routes', () => {
         }
       );
 
-      const res = await request(app)
+      await request(app)
         .get(`/alfa_lessons`)
         .send();
       expect(alfaLessonController.readAll).toHaveBeenCalled();
@@ -50,7 +49,7 @@ describe('Test AlfaLesson routes', () => {
       );
 
       const alfaLessonId = 4209;
-      const res = await request(app)
+      await request(app)
         .get(`/alfa_lessons/${alfaLessonId}`)
         .send();
       expect(alfaLessonController.read).toHaveBeenCalled();
@@ -66,7 +65,7 @@ describe('Test AlfaLesson routes', () => {
       );
 
       const alfaLessonId = 2938;
-      const res = await request(app)
+      await request(app)
         .patch(`/alfa_lessons/${alfaLessonId}`)
         .send({ status: 'updated' });
       expect(alfaLessonController.update).toHaveBeenCalled();
@@ -82,7 +81,7 @@ describe('Test AlfaLesson routes', () => {
       );
 
       const alfaLessonId = 9283;
-      const res = await request(app)
+      await request(app)
         .delete(`/alfa_lessons/${alfaLessonId}`)
         .send();
       expect(alfaLessonController.delete).toHaveBeenCalled();
