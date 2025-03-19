@@ -1,9 +1,16 @@
-import alfaLessonDbInterface 
-  from "../../src/alfaLesson/alfaLessonDbInterface";
-import { AlfaLessonClass } from "../../src/alfaLesson/AlfaLesson";
+import { isDeleteExpression } from 'typescript';
 import { createMockAlfaLesson } from '../utilities/alfaLesson';
 
-jest.mock('../../src/alfaLesson/alfaLessonDbInterface');
+let alfaLessonDbInterface: typeof import('../../src/alfaLesson/alfaLessonDbInterface').default;
+let AlfaLessonClass: typeof import('../../src/alfaLesson/AlfaLesson').AlfaLessonClass;
+
+beforeEach(async () => {
+  jest.resetModules();
+  const module = await import('../../src/alfaLesson/alfaLessonDbInterface');
+  alfaLessonDbInterface = module.default;
+  const lessonModule = await import('../../src/alfaLesson/AlfaLesson');
+  AlfaLessonClass = lessonModule.AlfaLessonClass;
+});
 
 describe('Test AlfaLesson Database Interface', () => {
   describe('alfaLessonDbInterface.create', () => {
@@ -15,29 +22,31 @@ describe('Test AlfaLesson Database Interface', () => {
 
       const actualLesson = alfaLessonDbInterface.create({ studentId, word });
 
-      expect(actualLesson).toBe(AlfaLessonClass);
-      expect(actualLesson).toEqual(expectedLesson);
+      expect(actualLesson).toBeInstanceOf(AlfaLessonClass);
+      expect(actualLesson.studentId).toEqual(expectedLesson.studentId);
+      expect(actualLesson.word).toEqual(expectedLesson.word);
+      expect(actualLesson.status).toEqual(expectedLesson.status);
     });
   });
 
   describe('alfaLessonDbInterface.readAll', () => {
     it('should return an array with all created AlfaLesson objects in it', 
       () => {
-      expect(alfaLessonDbInterface.readAll()).toBe([]);
+      expect(alfaLessonDbInterface.readAll()).toEqual([]);
       const firstAlfaLesson = alfaLessonDbInterface.create(
         { 
           studentId: 1, 
           word: "love" 
         }
       );
-      expect(alfaLessonDbInterface.readAll()).toBe([firstAlfaLesson]);
+      expect(alfaLessonDbInterface.readAll()).toEqual([firstAlfaLesson]);
       const secondAlfaLesson = alfaLessonDbInterface.create(
         { 
           studentId: 1, 
           word: "joy" 
         }
       );
-      expect(alfaLessonDbInterface.readAll()).toBe(
+      expect(alfaLessonDbInterface.readAll()).toEqual(
         [firstAlfaLesson, secondAlfaLesson]
       );
       const thirdAlfaLesson = alfaLessonDbInterface.create(
@@ -46,7 +55,7 @@ describe('Test AlfaLesson Database Interface', () => {
           word: "patience" 
         }
       );
-      expect(alfaLessonDbInterface.readAll()).toBe(
+      expect(alfaLessonDbInterface.readAll()).toEqual(
         [firstAlfaLesson, secondAlfaLesson, thirdAlfaLesson]
       );
     });
@@ -57,9 +66,15 @@ describe('Test AlfaLesson Database Interface', () => {
       () => {
         const studentId = 12;
         const word = "gentleness";
-        const alfaLesson = alfaLessonDbInterface.create({ studentId, word });
+        const createdLesson = alfaLessonDbInterface.create({studentId, word});
+        const alfaLesson = alfaLessonDbInterface.read(createdLesson.id);
 
-        expect(alfaLessonDbInterface.read(studentId)).toBe(alfaLesson);
+        expect(alfaLesson).toBeDefined();
+        if (alfaLesson) {
+          expect(alfaLesson.studentId).toBe(studentId);
+          expect(alfaLesson.word).toBe(word);
+          expect(alfaLesson.status).toBe('created');
+        }
     });
 
     it('should return undefined if there is no AlfaLesson object with a matching id', 
@@ -74,9 +89,9 @@ describe('Test AlfaLesson Database Interface', () => {
         const studentId = 12;
         const word = "gentleness";
         const updatedStatus = "updated";
-        const createdLesson = alfaLessonDbInterface.create({ studentId, word });
+        const createdLesson = alfaLessonDbInterface.create({studentId, word});
         const lessonId = createdLesson.id;
-        expect(createdLesson.updatedAt).toBe(null);
+        expect(createdLesson.status).toBe('created');
         alfaLessonDbInterface.update(lessonId, { status: updatedStatus });
         const updatedLesson = alfaLessonDbInterface.read(lessonId);
         expect(updatedLesson).toBeDefined;
@@ -85,7 +100,7 @@ describe('Test AlfaLesson Database Interface', () => {
           expect(updatedLesson.updatedAt instanceof Date).toBe(true);
         }
       });
-    
+
     it('should return undefined if there is no AlfaLesson object with the \
       correct id', () => {
       const lesson = alfaLessonDbInterface.update(3, { status: 'updated' });
@@ -125,13 +140,18 @@ describe('Test AlfaLesson Database Interface', () => {
           .length
       ).toBe(1);
 
-      alfaLessonDbInterface.delete(lessonTwoId);
-      expect(lessonsBeforeDeletion.length).toBe(3);
+      const deleteStatus = alfaLessonDbInterface.delete(lessonTwoId);
+      expect(deleteStatus).toBe(true);
+      expect(lessonsBeforeDeletion.length).toBe(2);
       expect(
         lessonsBeforeDeletion
           .filter(lesson => lesson.id === lessonTwoId)
           .length
       ).toBe(0);
     });
+
+    it('should return false if no object was deleted', () => {
+      expect(alfaLessonDbInterface.delete(3)).toBe(false);
+    })
   });
 });

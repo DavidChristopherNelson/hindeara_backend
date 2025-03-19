@@ -1,4 +1,5 @@
 import type { AlfaLesson } from './AlfaLesson';
+import {AlfaLessonClass } from './AlfaLesson';
 
 export default class alfaLessonDbInterface {
   private static alfaLessons: AlfaLesson[] = [];
@@ -8,15 +9,15 @@ export default class alfaLessonDbInterface {
     alfaLessonData: 
     Omit<AlfaLesson, 'id' | 'status' | 'createdAt' | 'updatedAt' | 'completedAt'>
   ): AlfaLesson => {
-    const newAlfaLesson: AlfaLesson = {
-      id: alfaLessonDbInterface.nextId++,
-      studentId: alfaLessonData.studentId,
-      word: alfaLessonData.word,
-      status: "created",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      completedAt: null
-    }
+    const newAlfaLesson = new AlfaLessonClass(
+      alfaLessonDbInterface.nextId++,
+      alfaLessonData.studentId,
+      alfaLessonData.word,
+      "created",
+      new Date(),
+      new Date(),
+      null
+    );
     alfaLessonDbInterface.alfaLessons.push(newAlfaLesson);
     return newAlfaLesson;
   }
