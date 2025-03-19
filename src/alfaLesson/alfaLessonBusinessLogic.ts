@@ -7,9 +7,8 @@ export default class alfaLessonBusinessLogic {
     studentId: number
   ): AlfaLesson => {
     const word = "cat";
-    const status = "created";
     const newAlfaLesson = alfaLessonDbInterface.create(
-      { studentId, word, status }
+      { studentId, word }
     );
     return newAlfaLesson;
   }

@@ -2,8 +2,6 @@ import alfaLessonBusinessLogic
   from "../../src/alfaLesson/alfaLessonBusinessLogic";
 import alfaLessonDbInterface 
   from "../../src/alfaLesson/alfaLessonDbInterface";
-import { getMockAlfaLessonResponse } 
-  from '../utilities/alfaLesson';
 
 jest.mock('../../src/alfaLesson/alfaLessonDbInterface');
 
@@ -17,8 +15,7 @@ describe('Test AlfaLesson Business Logic', () => {
       expect(alfaLessonDbInterface.create).toHaveBeenCalled();
       expect(alfaLessonDbInterface.create).toHaveBeenCalledWith({
         studentId,
-        word: expect.any(String),
-        status: "created"
+        word: expect.any(String)
       });
     });
   });

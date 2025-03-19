@@ -6,13 +6,13 @@ export default class alfaLessonDbInterface {
 
   static create = (
     alfaLessonData: 
-    Omit<AlfaLesson, 'id' | 'createdAt' | 'updatedAt' | 'completedAt'>
+    Omit<AlfaLesson, 'id' | 'status' | 'createdAt' | 'updatedAt' | 'completedAt'>
   ): AlfaLesson => {
     const newAlfaLesson: AlfaLesson = {
       id: alfaLessonDbInterface.nextId++,
       studentId: alfaLessonData.studentId,
       word: alfaLessonData.word,
-      status: alfaLessonData.status,
+      status: "created",
       createdAt: new Date(),
       updatedAt: new Date(),
       completedAt: null

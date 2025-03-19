@@ -2,7 +2,7 @@ import alfaLessonController
   from '../../src/alfaLesson/alfaLessonController';
 import alfaLessonBusinessLogic 
   from '../../src/alfaLesson/alfaLessonBusinessLogic';
-import { createMockReqRes, getMockAlfaLessonResponse } 
+import { createMockReqRes, createMockAlfaLesson } 
   from '../utilities/alfaLesson';
 
 jest.mock('../../src/alfaLesson/alfaLessonBusinessLogic');
@@ -17,7 +17,7 @@ describe('Test AlfaLesson Controller', () => {
       // Setup
       const { req, res } = createMockReqRes({ params: { studentId: '235' } });
       (alfaLessonBusinessLogic.create as jest.Mock).mockReturnValue(
-        getMockAlfaLessonResponse({ studentId: 235 })
+        createMockAlfaLesson({ studentId: 235 })
       );
 
       // Run the code
@@ -70,7 +70,7 @@ describe('Test AlfaLesson Controller', () => {
     it('should call alfaLessonBusinessLogic.readAll', () => {
       const { req, res } = createMockReqRes({ params: {} });
       (alfaLessonBusinessLogic.create as jest.Mock).mockReturnValue(
-        getMockAlfaLessonResponse()
+        createMockAlfaLesson()
       );
 
       alfaLessonController.readAll(req, res);
@@ -100,7 +100,7 @@ describe('Test AlfaLesson Controller', () => {
     it('should call alfaLessonBusinessLogic.read', () => {
       const { req, res } = createMockReqRes({ params: { alfaLessonId: '3' } });
       (alfaLessonBusinessLogic.read as jest.Mock).mockReturnValue(
-        getMockAlfaLessonResponse({id: 3})
+        createMockAlfaLesson({id: 3})
       );
 
       alfaLessonController.read(req, res);
@@ -156,7 +156,7 @@ describe('Test AlfaLesson Controller', () => {
         }
       );
       (alfaLessonBusinessLogic.update as jest.Mock).mockReturnValue(
-        getMockAlfaLessonResponse({id: 5, status: 'updated'})
+        createMockAlfaLesson({id: 5, status: 'updated'})
       );
 
       alfaLessonController.update(req, res);

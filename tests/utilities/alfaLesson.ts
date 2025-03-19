@@ -27,7 +27,7 @@ const defaultAlfaLesson: AlfaLesson = {
   completedAt: null,
 };
 
-export const getMockAlfaLessonResponse = (
+export const createMockAlfaLesson = (
   overrides: Partial<AlfaLesson> = {}
 ): AlfaLesson => ({
   ...defaultAlfaLesson,
