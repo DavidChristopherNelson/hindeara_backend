@@ -49,10 +49,10 @@ export default class alfaLessonDbInterface {
     const index = alfaLessonDbInterface.alfaLessons.findIndex(
       (lesson) => lesson.id === lessonId
     );
-    if (index !== -1) {
-      alfaLessonDbInterface.alfaLessons.splice(index, 1);
-      return true;
+    if (index == -1) {
+      return false;
     }
-    return false;
+    alfaLessonDbInterface.alfaLessons.splice(index, 1);
+    return true;
   };
 }

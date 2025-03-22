@@ -41,10 +41,16 @@ export default class letterDbInterface {
     const index = letterDbInterface.letters.findIndex(
       (letter) => letter.letter === letterString
     );
-    if (index !== -1) {
-      letterDbInterface.letters.splice(index, 1);
-      return true;
+    if (index == -1) {
+      return false;
     }
-    return false;
+    letterDbInterface.letters.splice(index, 1);
+    return true;
   };
 }
+
+/*
+
+
+
+*/
