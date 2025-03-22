@@ -1,5 +1,5 @@
 import type { AlfaLesson } from './AlfaLesson';
-import {AlfaLessonClass } from './AlfaLesson';
+import { AlfaLessonClass } from './AlfaLesson';
 
 export default class alfaLessonDbInterface {
   private static alfaLessons: AlfaLesson[] = [];

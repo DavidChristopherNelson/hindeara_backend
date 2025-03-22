@@ -35,8 +35,6 @@ export default class alfaLessonController {
     req: Request,
     res: Response
   ) => {
-    console.log("alfaLessonController.ts/readAll")
-
     try {
       const alfaLessons = alfaLessonBusinessLogic.readAll();
       res.status(200).json(alfaLessons);
