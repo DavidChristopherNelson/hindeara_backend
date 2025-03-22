@@ -19,7 +19,7 @@ export default class letterBusinessLogic {
 
   static update = (
     letterString: string,
-    updateData: Partial<Letter>
+    updateData: Partial<Omit<Letter, 'letter'>>
   ): Letter | undefined => {
     return letterDbInterface.update(letterString, updateData);
   };
