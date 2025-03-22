@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { AlfaLesson } from '../../src/alfaLesson/AlfaLesson';
+import { Letter } from '../../src/letter/Letter';
 
 export function createMockReqRes(
   reqOverrides: Partial<Request> = {},
@@ -29,6 +30,13 @@ const defaultAlfaLesson: AlfaLesson = {
 
 export const createMockAlfaLesson = (
   overrides: Partial<AlfaLesson> = {}
+): AlfaLesson => ({
+  ...defaultAlfaLesson,
+  ...overrides,
+});
+
+export const createMockLetter = (
+  overrides: Partial<Letter> = {}
 ): AlfaLesson => ({
   ...defaultAlfaLesson,
   ...overrides,

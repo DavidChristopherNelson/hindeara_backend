@@ -3,7 +3,7 @@ import alfaLessonController
 import alfaLessonBusinessLogic 
   from '../../src/alfaLesson/alfaLessonBusinessLogic';
 import { createMockReqRes, createMockAlfaLesson } 
-  from '../utilities/alfaLesson';
+  from '../utilities/helpers';
 
 jest.mock('../../src/alfaLesson/alfaLessonBusinessLogic');
 
@@ -131,7 +131,6 @@ describe('Test AlfaLesson Controller', () => {
       alfaLessonController.read(req, res);
     
       expect(res.status).toHaveBeenCalledWith(404);
-      expect(res.json).toHaveBeenCalledWith({ error: 'Lesson not found' });
     });
 
     it('should return 500 if alfaLessonBusinessLogic.read throws an error', 

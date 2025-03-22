@@ -1,5 +1,5 @@
 import { isDeleteExpression } from 'typescript';
-import { createMockAlfaLesson } from '../utilities/alfaLesson';
+import { createMockAlfaLesson } from '../utilities/helpers';
 
 let alfaLessonDbInterface: typeof import('../../src/alfaLesson/alfaLessonDbInterface').default;
 let AlfaLessonClass: typeof import('../../src/alfaLesson/AlfaLesson').AlfaLessonClass;

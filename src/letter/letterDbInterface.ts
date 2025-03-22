@@ -28,7 +28,7 @@ export default class letterDbInterface {
 
   static update = (
     letterString: string,
-    updateData: Partial<Letter>
+    updateData: Partial<Omit<Letter, 'letter'>>
   ): Letter | undefined => {
     const letter = letterDbInterface.read(letterString);
     if (letter) {
@@ -41,16 +41,10 @@ export default class letterDbInterface {
     const index = letterDbInterface.letters.findIndex(
       (letter) => letter.letter === letterString
     );
-    if (index == -1) {
+    if (index === -1) {
       return false;
     }
     letterDbInterface.letters.splice(index, 1);
     return true;
   };
 }
-
-/*
-
-
-
-*/

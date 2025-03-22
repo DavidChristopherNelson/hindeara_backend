@@ -24,6 +24,16 @@ const letterSchema = Joi.object({
   picture: Joi.string().required()
 });
 
+const updateDataSchema = Joi.object({
+  word: Joi.string()
+    .pattern(/^[a-z]+$/)
+    .required()
+    .messages({
+      'string.pattern.base': 'Word must contain only lowercase letters (a-z)'
+    }),
+  picture: Joi.string().required()
+});
+
 export default class letterController {
   static create = (
     req: Request,
@@ -89,19 +99,27 @@ export default class letterController {
     res: Response
   ) => {
     try {
+      // Validate LetterString
+      const { error: letterStringError, value: letterStringValue } = validateInput<string>(
+        letterStringSchema,
+        req.params.letter
+      );
+      if (letterStringError) {
+        return res.status(400).json({ letterStringError });
+      }
+      const letterString = letterStringValue!;
+
       // Validate Letter Data 
-      const { error, value } = validateInput<Letter>(
-        letterSchema,
+      const { error: letterDataError, value: letterDataValue } = validateInput<Partial<Omit<Letter, 'letter'>>>(
+        updateDataSchema,
         req.body
       );
-      if (error) {
-        return res.status(400).json({ 
-          error: error.toString()
-        });
+      if (letterDataError) {
+        return res.status(400).json({ letterDataError });
       }
-      const letterData = value!;
+      const letterData = letterDataValue!;
 
-      const letter = letterBusinessLogic.update(letterData.letter, letterData);
+      const letter = letterBusinessLogic.update(letterString, letterData);
       if (!letter) {
         return res.status(404).json({ error: 'Letter not found' });
       }

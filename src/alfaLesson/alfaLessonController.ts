@@ -63,7 +63,7 @@ export default class alfaLessonController {
       }
       res.status(200).json(lesson);
     } catch (error) {
-      res.status(500).json({error: 'Failed to read the alfa lesson.'});
+      res.status(500).json({ error: 'Failed to read the alfa lesson.' });
     }
   };
 
