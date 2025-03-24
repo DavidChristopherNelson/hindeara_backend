@@ -35,9 +35,15 @@ export const createMockAlfaLesson = (
   ...overrides,
 });
 
+const defaultLetter: Letter = {
+  letter: 'a',
+  word: 'apple',
+  picture: 'apple.jpg'
+};
+
 export const createMockLetter = (
   overrides: Partial<Letter> = {}
-): AlfaLesson => ({
-  ...defaultAlfaLesson,
+): Letter => ({
+  ...defaultLetter,
   ...overrides,
 });

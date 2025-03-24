@@ -1,4 +1,3 @@
-import { isDeleteExpression } from 'typescript';
 import { createMockAlfaLesson } from '../utilities/helpers';
 
 let alfaLessonDbInterface: typeof import('../../src/alfaLesson/alfaLessonDbInterface').default;
