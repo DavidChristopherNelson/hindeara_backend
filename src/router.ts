@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import alfaLessonController from "./alfaLesson/alfaLessonController";
+import letterController from "./letter/letterController";
 
 const app = express();
 
@@ -13,10 +14,9 @@ app.use(
 );
 app.options("*", cors());
 
-// Built-in middleware for JSON parsing
 app.use(express.json());
 
-// Define your routes
+// AlfaLesson routes
 app.post(
   "/students/:studentId/alfa_lessons",
   (req, res) => {
@@ -35,6 +35,27 @@ app.patch("/alfa_lessons/:alfaLessonId", (req, res) => {
 app.delete("/alfa_lessons/:alfaLessonId", (req, res) => {
   alfaLessonController.delete(req, res);
 });
+
+// Letter routes
+app.post(
+  "/letters",
+  (req, res) => {
+    letterController.create(req, res);
+  }
+);
+app.get("/letters", (req, res) => {
+  letterController.readAll(req, res);
+});
+app.get("/letters/:letter", (req, res) => {
+  letterController.read(req, res);
+});
+app.patch("/letters/:letter", (req, res) => {
+  letterController.update(req, res);
+});
+app.delete("/letters/:letter", (req, res) => {
+  letterController.delete(req, res);
+});
+
 app.get("/health", (req, res) => {
   res.send("OK");
 });
