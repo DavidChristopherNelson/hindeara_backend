@@ -1,18 +1,22 @@
-import { Recording } from "./Recording";
+import { Recording, RecordingClass } from "./Recording";
 
 export default class recordingDbInterface {
-  private static recordings: Recording[] = [];
+  private static recordings: RecordingClass[] = [];
   private static nextId: number = 1;
 
   static create = (
     recordingData: Partial<Omit<Recording, 'id' | 'createdAt' | 'updatedAt' >>
-  ): Recording => {
+  ): RecordingClass => {
+    if (!recordingData.recording) {
+      throw new Error('Recording is required');
+    }
+    
     const newRecording = new RecordingClass(
       recordingDbInterface.nextId++,
-      recordingData.studentId,
       recordingData.recording,
       new Date(),
       new Date(),
+      recordingData.studentId,
       recordingData.alfaLessonId,
       recordingData.transcription,
       recordingData.evaluation
