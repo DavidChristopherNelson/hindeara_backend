@@ -4,7 +4,7 @@ export interface Recording {
   recording: Buffer;
   createdAt: Date;
   updatedAt: Date;
-  alfaLessonId?: string;
+  alfaLessonId?: number;
   transcription?: string;
   evaluation?: string;
 }
